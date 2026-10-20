@@ -1,21 +1,105 @@
 console.info("[medication-tracker-card] script loaded");
 
+const DEFAULT_LANGUAGE = "en";
+
+// UI strings per language. Add a new language by copying the "en" block.
+// Placeholders in {curly} braces are filled in by MedicationTrackerCard._t().
+const TRANSLATIONS = {
+  en: {
+    title: "Medications",
+    empty: "No medications found.<br>Add medications via the integration settings.",
+    as_needed_tag: "As-needed",
+    status_on_track: "On track",
+    status_overdue: "Overdue",
+    status_due_soon: "Due soon",
+    status_low_stock: "Low stock",
+    status_available_now: "Available now",
+    status_limit_reached: "Limit reached",
+    status_available_in: "Available {when}",
+    availability_take_when_needed: "Take when needed",
+    availability_daily_limit: "Daily limit reached",
+    availability_next: "Next available {when}",
+    label_next_dose: "Next dose",
+    label_last_taken: "Last taken",
+    label_streak: "Streak",
+    label_taken_today: "Taken today",
+    label_availability: "Availability",
+    label_stock: "Stock",
+    streak_days_one: "{count} day",
+    streak_days_other: "{count} days",
+    action_mark_taken: "Mark taken",
+    action_skip: "Skip dose",
+    action_top_up: "Top up stock",
+    time_in_minutes: "in {minutes}m",
+    time_in_hours: "in {hours}h",
+    time_in_hours_minutes: "in {hours}h {minutes}m",
+    time_minutes_ago: "{minutes}m ago",
+    time_now: "now",
+  },
+  de: {
+    title: "Medikamente",
+    empty: "Keine Medikamente gefunden.<br>Füge Medikamente über die Integrationseinstellungen hinzu.",
+    as_needed_tag: "Bei Bedarf",
+    status_on_track: "Im Plan",
+    status_overdue: "Überfällig",
+    status_due_soon: "Bald fällig",
+    status_low_stock: "Vorrat niedrig",
+    status_available_now: "Jetzt verfügbar",
+    status_limit_reached: "Limit erreicht",
+    status_available_in: "Verfügbar {when}",
+    availability_take_when_needed: "Bei Bedarf einnehmen",
+    availability_daily_limit: "Tageslimit erreicht",
+    availability_next: "Nächste Einnahme möglich {when}",
+    label_next_dose: "Nächste Einnahme",
+    label_last_taken: "Zuletzt genommen",
+    label_streak: "Serie",
+    label_taken_today: "Heute genommen",
+    label_availability: "Verfügbarkeit",
+    label_stock: "Vorrat",
+    streak_days_one: "{count} Tag",
+    streak_days_other: "{count} Tage",
+    action_mark_taken: "Als genommen markieren",
+    action_skip: "Überspringen",
+    action_top_up: "Vorrat auffüllen",
+    time_in_minutes: "in {minutes} Min.",
+    time_in_hours: "in {hours} Std.",
+    time_in_hours_minutes: "in {hours} Std. {minutes} Min.",
+    time_minutes_ago: "vor {minutes} Min.",
+    time_now: "jetzt",
+  },
+};
+
 class MedicationTrackerCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
     this._medications = [];
     this._hass = null;
+    this._language = DEFAULT_LANGUAGE;
   }
 
   set hass(hass) {
     this._hass = hass;
+    this._language = this._resolveLanguage(hass);
     this._buildMedications();
     this._render();
   }
 
   setConfig(config) {
     this._config = config || {};
+  }
+
+  // Uses the language of the HA user profile, reduced to its base tag
+  // ("de-AT" -> "de"). Unsupported languages fall back to English.
+  _resolveLanguage(hass) {
+    const tag = hass.locale?.language || hass.language || DEFAULT_LANGUAGE;
+    const base = tag.split("-")[0].toLowerCase();
+    return TRANSLATIONS[base] ? base : DEFAULT_LANGUAGE;
+  }
+
+  _t(key, params = {}) {
+    const template = TRANSLATIONS[this._language][key] ?? TRANSLATIONS[DEFAULT_LANGUAGE][key] ?? key;
+    return template.replace(/\{(\w+)\}/g, (_, name) => params[name] ?? "");
   }
 
   // Finds a sibling entity for the same medication as the given base/device.
@@ -117,8 +201,8 @@ class MedicationTrackerCard extends HTMLElement {
       if (isNaN(d)) return "—";
       const now = new Date();
       const diffMin = Math.round((d - now) / 60000);
-      if (diffMin > 0 && diffMin < 120) return `in ${diffMin}m`;
-      if (diffMin <= 0 && diffMin > -120) return `${Math.abs(diffMin)}m ago`;
+      if (diffMin > 0 && diffMin < 120) return this._t("time_in_minutes", { minutes: diffMin });
+      if (diffMin <= 0 && diffMin > -120) return this._t("time_minutes_ago", { minutes: Math.abs(diffMin) });
       return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     } catch { return "—"; }
   }
@@ -133,7 +217,7 @@ class MedicationTrackerCard extends HTMLElement {
     const isLow = med.low_stock?.state === "on";
     return `
       <div class="stat">
-        <span class="stat-label">Stock</span>
+        <span class="stat-label">${this._t("label_stock")}</span>
         <span class="stat-value${isLow ? " stat-low-stock" : ""}">${med.stock.state}${isLow ? " ⚠️" : ""}</span>
       </div>
     `;
@@ -141,7 +225,7 @@ class MedicationTrackerCard extends HTMLElement {
 
   _renderTopUpButton(med) {
     if (!this._hasStock(med)) return "";
-    return `<button class="btn btn-topup" data-entity="${med.stock_number.entity_id}">Top up stock</button>`;
+    return `<button class="btn btn-topup" data-entity="${med.stock_number.entity_id}">${this._t("action_top_up")}</button>`;
   }
 
   _renderScheduledMed(med) {
@@ -149,14 +233,16 @@ class MedicationTrackerCard extends HTMLElement {
     const isDueSoon = med.due_soon?.state === "on";
     const isLowStock = med.low_stock?.state === "on";
     let rowClass = "med-row";
-    let badge = `<span class="status-badge badge-ok">On track</span>`;
-    if (isOverdue) { rowClass += " overdue"; badge = `<span class="status-badge badge-overdue">Overdue</span>`; }
-    else if (isDueSoon) { rowClass += " due-soon"; badge = `<span class="status-badge badge-due-soon">Due soon</span>`; }
-    if (isLowStock) badge += `<span class="status-badge badge-low-stock">Low stock</span>`;
+    let badge = `<span class="status-badge badge-ok">${this._t("status_on_track")}</span>`;
+    if (isOverdue) { rowClass += " overdue"; badge = `<span class="status-badge badge-overdue">${this._t("status_overdue")}</span>`; }
+    else if (isDueSoon) { rowClass += " due-soon"; badge = `<span class="status-badge badge-due-soon">${this._t("status_due_soon")}</span>`; }
+    if (isLowStock) badge += `<span class="status-badge badge-low-stock">${this._t("status_low_stock")}</span>`;
 
     const nextDose = this._formatRelative(med.next_dose?.state);
     const lastTaken = this._formatRelative(med.last_taken?.state);
     const streak = med.streak?.state ?? "0";
+    const streakPlural = new Intl.PluralRules(this._language).select(Number(streak)) === "one" ? "one" : "other";
+    const streakText = this._t(`streak_days_${streakPlural}`, { count: streak });
     const takenToday = med.taken_today?.state ?? "0";
     const scheduledToday = med.taken_today?.attributes?.doses_scheduled_today ?? "?";
     const btnTakenId = med.btn_taken ? med.btn_taken.entity_id : null;
@@ -166,15 +252,15 @@ class MedicationTrackerCard extends HTMLElement {
       <div class="${rowClass}">
         <div class="med-name">${med.name}${badge}</div>
         <div class="stats">
-          <div class="stat"><span class="stat-label">Next dose</span><span class="stat-value">${nextDose}</span></div>
-          <div class="stat"><span class="stat-label">Last taken</span><span class="stat-value">${lastTaken}</span></div>
-          <div class="stat"><span class="stat-label">Streak</span><span class="stat-value">${streak} day${streak === "1" ? "" : "s"}</span></div>
-          <div class="stat"><span class="stat-label">Taken today</span><span class="stat-value">${takenToday} / ${scheduledToday}</span></div>
+          <div class="stat"><span class="stat-label">${this._t("label_next_dose")}</span><span class="stat-value">${nextDose}</span></div>
+          <div class="stat"><span class="stat-label">${this._t("label_last_taken")}</span><span class="stat-value">${lastTaken}</span></div>
+          <div class="stat"><span class="stat-label">${this._t("label_streak")}</span><span class="stat-value">${streakText}</span></div>
+          <div class="stat"><span class="stat-label">${this._t("label_taken_today")}</span><span class="stat-value">${takenToday} / ${scheduledToday}</span></div>
           ${this._renderStockStat(med)}
         </div>
         <div class="actions">
-          ${btnTakenId ? `<button class="btn btn-taken" data-entity="${btnTakenId}">Mark taken</button>` : ""}
-          ${btnSkippedId ? `<button class="btn btn-skipped" data-entity="${btnSkippedId}">Skip dose</button>` : ""}
+          ${btnTakenId ? `<button class="btn btn-taken" data-entity="${btnTakenId}">${this._t("action_mark_taken")}</button>` : ""}
+          ${btnSkippedId ? `<button class="btn btn-skipped" data-entity="${btnSkippedId}">${this._t("action_skip")}</button>` : ""}
           ${this._renderTopUpButton(med)}
         </div>
       </div>
@@ -196,30 +282,30 @@ class MedicationTrackerCard extends HTMLElement {
 
     if (isAvailable) {
       rowClass += " available";
-      badge = `<span class="status-badge badge-ok">Available now</span>`;
-      availabilityInfo = "Take when needed";
+      badge = `<span class="status-badge badge-ok">${this._t("status_available_now")}</span>`;
+      availabilityInfo = this._t("availability_take_when_needed");
     } else if (!nextAvailableStr || nextAvailableStr === "unavailable" || nextAvailableStr === "unknown") {
-      badge = `<span class="status-badge badge-limit">Limit reached</span>`;
-      availabilityInfo = "Daily limit reached";
+      badge = `<span class="status-badge badge-limit">${this._t("status_limit_reached")}</span>`;
+      availabilityInfo = this._t("availability_daily_limit");
     } else {
       rowClass += " as-needed-waiting";
       const countdown = this._formatCountdown(nextAvailableStr);
-      badge = `<span class="status-badge badge-waiting">Available ${countdown}</span>`;
-      availabilityInfo = `Next available ${countdown}`;
+      badge = `<span class="status-badge badge-waiting">${this._t("status_available_in", { when: countdown })}</span>`;
+      availabilityInfo = this._t("availability_next", { when: countdown });
     }
-    if (isLowStock) badge += `<span class="status-badge badge-low-stock">Low stock</span>`;
+    if (isLowStock) badge += `<span class="status-badge badge-low-stock">${this._t("status_low_stock")}</span>`;
 
     return `
       <div class="${rowClass}">
-        <div class="med-name">${med.name}<span class="as-needed-tag">As-needed</span>${badge}</div>
+        <div class="med-name">${med.name}<span class="as-needed-tag">${this._t("as_needed_tag")}</span>${badge}</div>
         <div class="stats">
-          <div class="stat"><span class="stat-label">Availability</span><span class="stat-value">${availabilityInfo}</span></div>
-          <div class="stat"><span class="stat-label">Last taken</span><span class="stat-value">${lastTaken}</span></div>
-          <div class="stat"><span class="stat-label">Taken today</span><span class="stat-value">${takenToday} / ${maxPerDay}</span></div>
+          <div class="stat"><span class="stat-label">${this._t("label_availability")}</span><span class="stat-value">${availabilityInfo}</span></div>
+          <div class="stat"><span class="stat-label">${this._t("label_last_taken")}</span><span class="stat-value">${lastTaken}</span></div>
+          <div class="stat"><span class="stat-label">${this._t("label_taken_today")}</span><span class="stat-value">${takenToday} / ${maxPerDay}</span></div>
           ${this._renderStockStat(med)}
         </div>
         <div class="actions">
-          ${btnTakenId ? `<button class="btn btn-taken${isAvailable ? "" : " btn-disabled"}" data-entity="${btnTakenId}" ${isAvailable ? "" : "disabled"}>Mark taken</button>` : ""}
+          ${btnTakenId ? `<button class="btn btn-taken${isAvailable ? "" : " btn-disabled"}" data-entity="${btnTakenId}" ${isAvailable ? "" : "disabled"}>${this._t("action_mark_taken")}</button>` : ""}
           ${this._renderTopUpButton(med)}
         </div>
       </div>
@@ -233,11 +319,13 @@ class MedicationTrackerCard extends HTMLElement {
       if (isNaN(d)) return "—";
       const now = new Date();
       const diffMin = Math.round((d - now) / 60000);
-      if (diffMin <= 0) return "now";
-      if (diffMin < 60) return `in ${diffMin}m`;
-      const h = Math.floor(diffMin / 60);
-      const m = diffMin % 60;
-      return m > 0 ? `in ${h}h ${m}m` : `in ${h}h`;
+      if (diffMin <= 0) return this._t("time_now");
+      if (diffMin < 60) return this._t("time_in_minutes", { minutes: diffMin });
+      const hours = Math.floor(diffMin / 60);
+      const minutes = diffMin % 60;
+      return minutes > 0
+        ? this._t("time_in_hours_minutes", { hours, minutes })
+        : this._t("time_in_hours", { hours });
     } catch { return "—"; }
   }
 
@@ -296,7 +384,7 @@ class MedicationTrackerCard extends HTMLElement {
 
     let rows;
     if (this._medications.length === 0) {
-      rows = `<div class="empty">No medications found.<br>Add medications via the integration settings.</div>`;
+      rows = `<div class="empty">${this._t("empty")}</div>`;
     } else {
       rows = this._medications.map(med => {
         if (med.med_type === "as_needed") {
@@ -309,7 +397,7 @@ class MedicationTrackerCard extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>${style}</style>
       <div class="card">
-        <div class="card-header">💊 Medications</div>
+        <div class="card-header">💊 ${this._t("title")}</div>
         ${rows}
       </div>
     `;
