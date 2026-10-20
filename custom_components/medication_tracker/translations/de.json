@@ -1,9 +1,10 @@
 {
+  "title": "Medikamentenübersicht",
   "config": {
     "step": {
       "user": {
-        "title": "Medication Tracker einrichten",
-        "description": "Erstelle eine Medication-Tracker-Instanz. Medikamente kannst du nach der Einrichtung über die Schaltfläche „Konfigurieren“ hinzufügen.",
+        "title": "Medikamentenübersicht einrichten",
+        "description": "Erstelle eine neue Medikamentenübersicht. Medikamente kannst du nach der Einrichtung über die Schaltfläche „Konfigurieren“ hinzufügen.",
         "data": {
           "title": "Name des Trackers"
         }
