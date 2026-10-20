@@ -3,6 +3,7 @@
   "name": "Medication Tracker",
   "after_dependencies": [],
   "codeowners": [
+    "@calebgab",
     "@seb5594"
   ],
   "config_flow": true,
