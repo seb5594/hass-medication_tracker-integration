@@ -1,13 +1,25 @@
-# <img src="custom_components/medication_tracker/brand/icon.png" alt="" height="32"/> Medication Tracker for Home Assistant
+<!-- header:begin (generated from project metadata) -->
+<h1 align="center">Medication Tracker</h1>
 
-[![HACS Default](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/default)
-[![GitHub release](https://img.shields.io/github/release/calebgab/medication_tracker.svg)](https://github.com/calebgab/medication_tracker/releases)
-[![Downloads (latest release)](https://img.shields.io/github/downloads/calebgab/medication_tracker/latest/total.svg)](https://github.com/calebgab/medication_tracker/releases/latest)
-[![Downloads (all releases)](https://img.shields.io/github/downloads/calebgab/medication_tracker/total.svg)](https://github.com/calebgab/medication_tracker/releases)
-[![CI](https://github.com/calebgab/medication_tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/calebgab/medication_tracker/actions/workflows/ci.yml)
-[![Validate](https://github.com/calebgab/medication_tracker/actions/workflows/validate.yml/badge.svg)](https://github.com/calebgab/medication_tracker/actions/workflows/validate.yml)
-[![Validate Custom](https://github.com/calebgab/medication_tracker/actions/workflows/validate-custom.yml/badge.svg)](https://github.com/calebgab/medication_tracker/actions/workflows/validate-custom.yml)
-[![Validate with hassfest](https://github.com/calebgab/medication_tracker/actions/workflows/hassfest.yaml/badge.svg)](https://github.com/calebgab/medication_tracker/actions/workflows/hassfest.yaml)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/seb5594/hass-medication_tracker-integration/main/custom_components/medication_tracker/brand/icon@2x.png" alt="Medication Tracker" width="160" height="160">
+</p>
+
+---
+
+<p align="center">
+  <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=seb5594&amp;repository=hass-medication_tracker-integration&amp;category=integration"><img src="https://img.shields.io/static/v1?label=HACS&amp;message=Add%20integration&amp;color=41BDF5&amp;logo=homeassistantcommunitystore&amp;logoColor=white&amp;style=for-the-badge" alt="HACS" height="28"></a>
+  <img src="https://img.shields.io/static/v1?label=home%20assistant&amp;message=%E2%89%A5%202024.7.0&amp;color=1877A5&amp;style=for-the-badge" alt="home assistant" height="28">
+  <a href="https://github.com/seb5594/hass-medication_tracker-integration/releases"><img src="https://img.shields.io/static/v1?label=version&amp;message=2026.7.14.3&amp;color=1877A5&amp;style=for-the-badge" alt="version" height="28"></a><br>
+  <a href="https://github.com/seb5594/hass-medication_tracker-integration/stargazers"><img src="https://img.shields.io/github/stars/seb5594/hass-medication_tracker-integration?label=stars&amp;style=flat" alt="stars" height="20"></a>
+  <a href="https://github.com/seb5594/hass-medication_tracker-integration/releases"><img src="https://img.shields.io/github/downloads/seb5594/hass-medication_tracker-integration/latest/total?label=downloads&amp;color=1877A5&amp;style=flat" alt="downloads" height="20"></a>
+  <a href="https://github.com/seb5594/hass-medication_tracker-integration/issues"><img src="https://img.shields.io/github/issues/seb5594/hass-medication_tracker-integration?label=issues&amp;style=flat" alt="issues" height="20"></a>
+  <a href="https://github.com/seb5594/hass-medication_tracker-integration/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/seb5594/hass-medication_tracker-integration/ci.yml?branch=main&amp;label=checks&amp;style=flat" alt="checks" height="20"></a>
+  <a href="https://github.com/seb5594/hass-medication_tracker-integration#license"><img src="https://img.shields.io/github/license/seb5594/hass-medication_tracker-integration?label=license&amp;style=flat" alt="license" height="20"></a><br>
+  <a href="https://paypal.me/seb5594"><img src="https://img.shields.io/static/v1?label=Support&amp;message=PayPal&amp;color=0070BA&amp;logo=paypal&amp;logoColor=white&amp;style=for-the-badge" alt="PayPal" height="40"></a>
+  <a href="https://buymeacoffee.com/seb5594"><img src="https://img.shields.io/static/v1?label=Support&amp;message=Buy%20Me%20a%20Coffee&amp;color=FFDD00&amp;logo=buy-me-a-coffee&amp;logoColor=black&amp;style=for-the-badge" alt="Buy Me a Coffee" height="40"></a>
+</p>
+<!-- header:end -->
 
 Track medications, scheduled doses, streaks, and overdue alerts — entirely local, no cloud, no app required.
 
@@ -374,3 +386,21 @@ Restart Home Assistant after installing or updating the integration and do a ful
 ## License
 
 MIT
+
+<!-- support:begin (generated, shared text) -->
+## Say thanks
+
+All my projects are built in my spare time, just for the fun of it. Still, they take a lot of time and care, and many of the smart home gadgets I buy end up here because I want to make them cloud-free and smart-home ready. Every bit of support means a lot to me.
+
+If my work helped you or turned out to be useful, show your appreciation with a hot drink for my next sleepless night.
+
+[![PayPal](https://img.shields.io/static/v1?label=Support&message=PayPal&color=0070BA&logo=paypal&logoColor=white&style=for-the-badge)](https://paypal.me/seb5594) [![Buy Me a Coffee](https://img.shields.io/static/v1?label=Support&message=Buy%20Me%20a%20Coffee&color=FFDD00&logo=buy-me-a-coffee&logoColor=black&style=for-the-badge)](https://buymeacoffee.com/seb5594)
+<!-- support:end -->
+
+<!-- license:begin (generated from the license file) -->
+## License
+
+[![license](https://img.shields.io/static/v1?label=license&message=MIT&color=5B6770&style=flat)](LICENSE)
+
+Published under the [MIT License](LICENSE).
+<!-- license:end -->
