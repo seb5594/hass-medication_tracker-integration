@@ -3,16 +3,16 @@
   "name": "Medication Tracker",
   "after_dependencies": [],
   "codeowners": [
-    "@calebgab"
+    "@seb5594"
   ],
   "config_flow": true,
   "dependencies": [
     "frontend",
     "http"
   ],
-  "documentation": "https://github.com/calebgab/medication_tracker",
+  "documentation": "https://github.com/seb5594/hass-medication_tracker-integration",
   "iot_class": "local_push",
-  "issue_tracker": "https://github.com/calebgab/medication_tracker/issues",
+  "issue_tracker": "https://github.com/seb5594/hass-medication_tracker-integration/issues",
   "requirements": [],
   "version": "2026.7.14.3"
 }
