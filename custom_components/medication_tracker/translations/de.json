@@ -1,0 +1,199 @@
+{
+  "title": "Medikamentenübersicht",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Medikamentenübersicht einrichten",
+        "description": "Erstelle eine neue Medikamentenübersicht. Medikamente kannst du nach der Einrichtung über die Schaltfläche „Konfigurieren“ hinzufügen.",
+        "data": {
+          "title": "Name des Trackers"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Dieser Tracker-Name ist bereits konfiguriert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Tracker verwalten",
+        "description": "Es sind {count} Medikament(e) konfiguriert.",
+        "data": {
+          "action": "Aktion"
+        }
+      },
+      "add_medication": {
+        "title": "Medikament hinzufügen",
+        "data": {
+          "name": "Name des Medikaments",
+          "dose": "Dosis (z. B. 10 mg)",
+          "med_type": "Art des Medikaments",
+          "notes": "Notizen"
+        }
+      },
+      "edit_medication": {
+        "title": "Medikament bearbeiten",
+        "data": {
+          "name": "Name des Medikaments",
+          "dose": "Dosis",
+          "med_type": "Art des Medikaments",
+          "notes": "Notizen"
+        }
+      },
+      "remove_medication": {
+        "title": "Medikament entfernen",
+        "data": {
+          "medication_id": "Zu entfernendes Medikament auswählen"
+        }
+      },
+      "notifications": {
+        "title": "Benachrichtigungen",
+        "description": "Lege fest, wann und wie du über Medikamente benachrichtigt wirst.",
+        "data": {
+          "notify_target": "Benachrichtigungsdienst (z. B. notify.persistent_notification)",
+          "due_enabled": "Benachrichtigen, wenn eine Einnahme fällig ist",
+          "overdue_enabled": "Alle N Minuten erinnern, bis die Einnahme bestätigt oder übersprungen wurde",
+          "overdue_repeat_minutes": "Überfällig nach / Erinnerung alle (Minuten)",
+          "overdue_max_repeats": "Erinnerungen beenden nach dieser Anzahl",
+          "due_soon_enabled": "Benachrichtigen, wenn eine Einnahme bald fällig ist",
+          "taken_enabled": "Bestätigen, wenn eine Einnahme als genommen markiert wird",
+          "low_stock_enabled": "Benachrichtigen, wenn der Vorrat zur Neige geht",
+          "action": "Weiter"
+        }
+      },
+      "notification_due_message": {
+        "title": "Nachrichtenvorlage „Jetzt fällig“",
+        "description": "Passe die Nachricht an, die gesendet wird, wenn eine Einnahme fällig ist.\n\n**Benachrichtigungstöne** — iOS und Android steuern Töne unterschiedlich, daher gibt es unten für jedes System eigene Optionen. ⚠️ „Kritisch“ unter iOS umgeht den Stumm-Modus und „Nicht stören“, funktioniert aber nur, wenn du der Home-Assistant-App in den iOS-Einstellungen unter Mitteilungen → Home Assistant die Berechtigung „Kritische Hinweise“ erteilt hast. „Kritisch“ unter Android nutzt einen eigenen Kanal „Critical Medication“ — Android sperrt Ton und Wichtigkeit eines Kanals, sobald er einmal angelegt wurde. Passe ihn bei Bedarf daher anschließend in den Benachrichtigungseinstellungen deines Telefons an.",
+        "data": {
+          "due_title": "Titel der Benachrichtigung",
+          "due_message": "Text der Benachrichtigung",
+          "due_ios_sound_mode": "iOS — Tonverhalten",
+          "due_ios_sound_name": "iOS — Name des Tons für zeitkritische Mitteilungen (nur relevant, wenn oben „Zeitkritisch“ gewählt ist)",
+          "due_android_sound_mode": "Android — Tonverhalten",
+          "due_android_importance": "Android — Wichtigkeit des Kanals (nur relevant, wenn oben „Kritisch“ gewählt ist)"
+        }
+      },
+      "notification_overdue_message": {
+        "title": "Nachrichtenvorlage „Überfällig“",
+        "description": "Passe die Nachricht an, die gesendet wird, wenn eine Einnahme überfällig ist.\n\n**Benachrichtigungstöne** — iOS und Android steuern Töne unterschiedlich, daher gibt es unten für jedes System eigene Optionen. ⚠️ „Kritisch“ unter iOS umgeht den Stumm-Modus und „Nicht stören“, funktioniert aber nur, wenn du der Home-Assistant-App in den iOS-Einstellungen unter Mitteilungen → Home Assistant die Berechtigung „Kritische Hinweise“ erteilt hast. „Kritisch“ unter Android nutzt einen eigenen Kanal „Critical Medication“ — Android sperrt Ton und Wichtigkeit eines Kanals, sobald er einmal angelegt wurde. Passe ihn bei Bedarf daher anschließend in den Benachrichtigungseinstellungen deines Telefons an.",
+        "data": {
+          "overdue_title": "Titel der Benachrichtigung",
+          "overdue_message": "Text der Benachrichtigung",
+          "overdue_ios_sound_mode": "iOS — Tonverhalten",
+          "overdue_ios_sound_name": "iOS — Name des Tons für zeitkritische Mitteilungen (nur relevant, wenn oben „Zeitkritisch“ gewählt ist)",
+          "overdue_android_sound_mode": "Android — Tonverhalten",
+          "overdue_android_importance": "Android — Wichtigkeit des Kanals (nur relevant, wenn oben „Kritisch“ gewählt ist)"
+        }
+      },
+      "notification_due_soon_message": {
+        "title": "Nachrichtenvorlage „Bald fällig“",
+        "description": "Passe die Nachricht an, die gesendet wird, wenn eine Einnahme bald fällig ist.\n\n**Benachrichtigungstöne** — iOS und Android steuern Töne unterschiedlich, daher gibt es unten für jedes System eigene Optionen. ⚠️ „Kritisch“ unter iOS umgeht den Stumm-Modus und „Nicht stören“, funktioniert aber nur, wenn du der Home-Assistant-App in den iOS-Einstellungen unter Mitteilungen → Home Assistant die Berechtigung „Kritische Hinweise“ erteilt hast. „Kritisch“ unter Android nutzt einen eigenen Kanal „Critical Medication“ — Android sperrt Ton und Wichtigkeit eines Kanals, sobald er einmal angelegt wurde. Passe ihn bei Bedarf daher anschließend in den Benachrichtigungseinstellungen deines Telefons an.",
+        "data": {
+          "due_soon_title": "Titel der Benachrichtigung",
+          "due_soon_message": "Text der Benachrichtigung",
+          "due_soon_ios_sound_mode": "iOS — Tonverhalten",
+          "due_soon_ios_sound_name": "iOS — Name des Tons für zeitkritische Mitteilungen (nur relevant, wenn oben „Zeitkritisch“ gewählt ist)",
+          "due_soon_android_sound_mode": "Android — Tonverhalten",
+          "due_soon_android_importance": "Android — Wichtigkeit des Kanals (nur relevant, wenn oben „Kritisch“ gewählt ist)"
+        }
+      },
+      "notification_taken_message": {
+        "title": "Nachrichtenvorlage „Einnahme bestätigt“",
+        "description": "Passe die Nachricht an, die gesendet wird, wenn eine Einnahme als genommen markiert wird.\n\n**Benachrichtigungstöne** — iOS und Android steuern Töne unterschiedlich, daher gibt es unten für jedes System eigene Optionen. ⚠️ „Kritisch“ unter iOS umgeht den Stumm-Modus und „Nicht stören“, funktioniert aber nur, wenn du der Home-Assistant-App in den iOS-Einstellungen unter Mitteilungen → Home Assistant die Berechtigung „Kritische Hinweise“ erteilt hast. „Kritisch“ unter Android nutzt einen eigenen Kanal „Critical Medication“ — Android sperrt Ton und Wichtigkeit eines Kanals, sobald er einmal angelegt wurde. Passe ihn bei Bedarf daher anschließend in den Benachrichtigungseinstellungen deines Telefons an.",
+        "data": {
+          "taken_title": "Titel der Benachrichtigung",
+          "taken_message": "Text der Benachrichtigung",
+          "taken_ios_sound_mode": "iOS — Tonverhalten",
+          "taken_ios_sound_name": "iOS — Name des Tons für zeitkritische Mitteilungen (nur relevant, wenn oben „Zeitkritisch“ gewählt ist)",
+          "taken_android_sound_mode": "Android — Tonverhalten",
+          "taken_android_importance": "Android — Wichtigkeit des Kanals (nur relevant, wenn oben „Kritisch“ gewählt ist)"
+        }
+      },
+      "notification_low_stock_message": {
+        "title": "Nachrichtenvorlage „Vorrat niedrig“",
+        "description": "Passe die Nachricht an, die gesendet wird, wenn der Vorrat eines Medikaments zur Neige geht. Mit {stock} kannst du die verbleibende Menge anzeigen.\n\n**Benachrichtigungstöne** — iOS und Android steuern Töne unterschiedlich, daher gibt es unten für jedes System eigene Optionen. ⚠️ „Kritisch“ unter iOS umgeht den Stumm-Modus und „Nicht stören“, funktioniert aber nur, wenn du der Home-Assistant-App in den iOS-Einstellungen unter Mitteilungen → Home Assistant die Berechtigung „Kritische Hinweise“ erteilt hast. „Kritisch“ unter Android nutzt einen eigenen Kanal „Critical Medication“ — Android sperrt Ton und Wichtigkeit eines Kanals, sobald er einmal angelegt wurde. Passe ihn bei Bedarf daher anschließend in den Benachrichtigungseinstellungen deines Telefons an.",
+        "data": {
+          "low_stock_title": "Titel der Benachrichtigung",
+          "low_stock_message": "Text der Benachrichtigung",
+          "low_stock_ios_sound_mode": "iOS — Tonverhalten",
+          "low_stock_ios_sound_name": "iOS — Name des Tons für zeitkritische Mitteilungen (nur relevant, wenn oben „Zeitkritisch“ gewählt ist)",
+          "low_stock_android_sound_mode": "Android — Tonverhalten",
+          "low_stock_android_importance": "Android — Wichtigkeit des Kanals (nur relevant, wenn oben „Kritisch“ gewählt ist)"
+        }
+      },
+      "notification_per_medication": {
+        "title": "Einstellungen pro Medikament",
+        "description": "Wähle ein Medikament aus, um individuelle Benachrichtigungseinstellungen festzulegen.",
+        "data": {
+          "medication_id": "Medikament"
+        }
+      },
+      "notification_med_overrides": {
+        "title": "Einstellungen für {medication}",
+        "description": "Benachrichtigungen für dieses Medikament ein- oder ausschalten. Diese Einstellungen überschreiben die globalen Einstellungen von oben.",
+        "data": {
+          "override_due": "Benachrichtigen, wenn fällig",
+          "override_overdue": "Benachrichtigen, wenn überfällig",
+          "override_due_soon": "Benachrichtigen, wenn bald fällig",
+          "override_taken": "Bestätigen, wenn genommen",
+          "override_low_stock": "Benachrichtigen, wenn der Vorrat niedrig ist"
+        }
+      },
+      "add_medication_scheduled": {
+        "title": "Einnahmezeiten",
+        "description": "Lege fest, zu welchen Zeiten und an welchen Tagen dieses Medikament eingenommen werden soll.",
+        "data": {
+          "times": "Einnahmezeiten (HH:MM, durch Komma getrennt)",
+          "days": "Tage (mon, tue, wed … oder leer lassen für jeden Tag)",
+          "stock_tracking_enabled": "Vorrat für dieses Medikament verfolgen",
+          "current_stock": "Aktueller Vorrat",
+          "stock_per_dose": "Verbrauch pro Einnahme (Einheiten)",
+          "stock_low_threshold": "Benachrichtigen, wenn der Vorrat diesen Wert erreicht oder unterschreitet"
+        }
+      },
+      "add_medication_as_needed": {
+        "title": "Limits für Bedarfsmedikation",
+        "description": "Lege die Dosierungsgrenzen für dieses Bedarfsmedikament fest.",
+        "data": {
+          "as_needed_max_per_day": "Max. Einnahmen pro Tag",
+          "as_needed_max_per_24h": "Max. Einnahmen pro 24 Stunden (gleitend)",
+          "as_needed_min_hours": "Mindestabstand zwischen Einnahmen (Stunden)",
+          "stock_tracking_enabled": "Vorrat für dieses Medikament verfolgen",
+          "current_stock": "Aktueller Vorrat",
+          "stock_per_dose": "Verbrauch pro Einnahme (Einheiten)",
+          "stock_low_threshold": "Benachrichtigen, wenn der Vorrat diesen Wert erreicht oder unterschreitet"
+        }
+      },
+      "edit_medication_scheduled": {
+        "title": "Einnahmezeiten",
+        "description": "Bearbeite die Zeiten und Tage, an denen dieses Medikament eingenommen werden soll.",
+        "data": {
+          "times": "Einnahmezeiten (HH:MM, durch Komma getrennt)",
+          "days": "Tage (mon, tue, wed … oder leer lassen für jeden Tag)",
+          "stock_tracking_enabled": "Vorrat für dieses Medikament verfolgen",
+          "current_stock": "Aktueller Vorrat",
+          "stock_per_dose": "Verbrauch pro Einnahme (Einheiten)",
+          "stock_low_threshold": "Benachrichtigen, wenn der Vorrat diesen Wert erreicht oder unterschreitet"
+        }
+      },
+      "edit_medication_as_needed": {
+        "title": "Limits für Bedarfsmedikation",
+        "description": "Bearbeite die Dosierungsgrenzen für dieses Bedarfsmedikament.",
+        "data": {
+          "as_needed_max_per_day": "Max. Einnahmen pro Tag",
+          "as_needed_max_per_24h": "Max. Einnahmen pro 24 Stunden (gleitend)",
+          "as_needed_min_hours": "Mindestabstand zwischen Einnahmen (Stunden)",
+          "stock_tracking_enabled": "Vorrat für dieses Medikament verfolgen",
+          "current_stock": "Aktueller Vorrat",
+          "stock_per_dose": "Verbrauch pro Einnahme (Einheiten)",
+          "stock_low_threshold": "Benachrichtigen, wenn der Vorrat diesen Wert erreicht oder unterschreitet"
+        }
+      }
+    },
+    "error": {
+      "invalid_time_format": "Ungültiges Zeitformat. Verwende HH:MM, durch Komma getrennt (z. B. 08:00, 20:00).",
+      "invalid_day_format": "Ungültiges Tagesformat. Verwende mon/tue/wed/thu/fri/sat/sun, durch Komma getrennt."
+    }
+  }
+}
