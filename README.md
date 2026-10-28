@@ -166,6 +166,13 @@ Android sound isn't controllable per-notification — it's tied to the notificat
 
 After configuring global notification settings, choose **Per-medication overrides** from the Notifications menu and select a medication. You can then enable or disable each alert type individually for that medication, overriding whatever the global setting is.
 
+Notification titles, messages, and the **Mark taken** action follow the Home Assistant
+system language (English or German; other languages fall back to English). This is
+the server's language, rather than the language of an individual user's profile.
+Previously saved, unchanged default templates follow this language automatically;
+custom titles and messages are kept as entered. The template editor shows the same
+localized defaults that are used when sending notifications.
+
 **Available placeholders in message templates:**
 
 | Placeholder | Description |

@@ -41,21 +41,11 @@ from .const import (
     CONF_NOTIF_TARGET,
     DEFAULT_ANDROID_IMPORTANCE,
     DEFAULT_ANDROID_SOUND_MODE,
-    DEFAULT_DUE_MESSAGE,
-    DEFAULT_DUE_SOON_MESSAGE,
-    DEFAULT_DUE_SOON_TITLE,
-    DEFAULT_DUE_TITLE,
     DEFAULT_IOS_SOUND_MODE,
     DEFAULT_IOS_SOUND_NAME,
-    DEFAULT_LOW_STOCK_MESSAGE,
-    DEFAULT_LOW_STOCK_TITLE,
     DEFAULT_NOTIFY_TARGET,
     DEFAULT_OVERDUE_MAX_REPEATS,
-    DEFAULT_OVERDUE_MESSAGE,
     DEFAULT_OVERDUE_REPEAT_MINUTES,
-    DEFAULT_OVERDUE_TITLE,
-    DEFAULT_TAKEN_MESSAGE,
-    DEFAULT_TAKEN_TITLE,
     IOS_CRITICAL_SOUND,
     NOTIF_SOUND_KEYS_BY_TYPE,
     REMINDER_NOTIFICATION_TAG_PREFIX,
@@ -64,6 +54,7 @@ from .const import (
     SOUND_MODE_TIME_SENSITIVE,
 )
 
+from .notification_text import mark_taken_title, notification_template
 from .coordinator import extract_scheduled_time
 
 if TYPE_CHECKING:
@@ -93,11 +84,13 @@ def _is_ios(hass: HomeAssistant, target: str) -> bool:
     return False
 
 
-def _build_action_data(is_ios: bool, med_id: str) -> dict[str, Any]:
+def _build_action_data(
+    is_ios: bool, med_id: str, language: str | None = "en"
+) -> dict[str, Any]:
     """Build platform-appropriate action data for an actionable notification."""
     # Encode med_id in the action identifier so it comes back in the event response
     actions = [
-        {"action": f"{ACTION_MARK_TAKEN_PREFIX}{med_id}", "title": "Mark taken"},
+        {"action": f"{ACTION_MARK_TAKEN_PREFIX}{med_id}", "title": mark_taken_title(language)},
     ]
     # Same tag on both platforms: reusing it means a repeat reminder replaces
     # the previous one instead of stacking, and it lets async_clear_pending_
@@ -295,8 +288,12 @@ class MedicationNotifier:
             return
 
         state = self._coordinator.get_med_state(med_id)
-        title = notif_config.get(CONF_NOTIF_TAKEN_TITLE, DEFAULT_TAKEN_TITLE)
-        message = notif_config.get(CONF_NOTIF_TAKEN_MESSAGE, DEFAULT_TAKEN_MESSAGE)
+        title = notification_template(
+            notif_config, CONF_NOTIF_TAKEN_TITLE, self._hass.config.language
+        )
+        message = notification_template(
+            notif_config, CONF_NOTIF_TAKEN_MESSAGE, self._hass.config.language
+        )
         await self._send(
             notif_config,
             title,
@@ -347,8 +344,12 @@ class MedicationNotifier:
             return
 
         _LOGGER.debug("Firing due now notification for %s", med["name"])
-        title = notif_config.get(CONF_NOTIF_DUE_TITLE, DEFAULT_DUE_TITLE)
-        message = notif_config.get(CONF_NOTIF_DUE_MESSAGE, DEFAULT_DUE_MESSAGE)
+        title = notification_template(
+            notif_config, CONF_NOTIF_DUE_TITLE, self._hass.config.language
+        )
+        message = notification_template(
+            notif_config, CONF_NOTIF_DUE_MESSAGE, self._hass.config.language
+        )
         await self._send(
             notif_config,
             title,
@@ -408,8 +409,12 @@ class MedicationNotifier:
         _LOGGER.debug(
             "Firing overdue reminder %d/%d for %s", repeat_count + 1, max_repeats, med["name"]
         )
-        title = notif_config.get(CONF_NOTIF_OVERDUE_TITLE, DEFAULT_OVERDUE_TITLE)
-        message = notif_config.get(CONF_NOTIF_OVERDUE_MESSAGE, DEFAULT_OVERDUE_MESSAGE)
+        title = notification_template(
+            notif_config, CONF_NOTIF_OVERDUE_TITLE, self._hass.config.language
+        )
+        message = notification_template(
+            notif_config, CONF_NOTIF_OVERDUE_MESSAGE, self._hass.config.language
+        )
         await self._send(
             notif_config,
             title,
@@ -452,8 +457,12 @@ class MedicationNotifier:
             return
 
         _LOGGER.debug("Firing due soon notification for %s", med["name"])
-        title = notif_config.get(CONF_NOTIF_DUE_SOON_TITLE, DEFAULT_DUE_SOON_TITLE)
-        message = notif_config.get(CONF_NOTIF_DUE_SOON_MESSAGE, DEFAULT_DUE_SOON_MESSAGE)
+        title = notification_template(
+            notif_config, CONF_NOTIF_DUE_SOON_TITLE, self._hass.config.language
+        )
+        message = notification_template(
+            notif_config, CONF_NOTIF_DUE_SOON_MESSAGE, self._hass.config.language
+        )
         await self._send(
             notif_config,
             title,
@@ -496,8 +505,12 @@ class MedicationNotifier:
             return
 
         _LOGGER.debug("Firing low stock notification for %s", med["name"])
-        title = notif_config.get(CONF_NOTIF_LOW_STOCK_TITLE, DEFAULT_LOW_STOCK_TITLE)
-        message = notif_config.get(CONF_NOTIF_LOW_STOCK_MESSAGE, DEFAULT_LOW_STOCK_MESSAGE)
+        title = notification_template(
+            notif_config, CONF_NOTIF_LOW_STOCK_TITLE, self._hass.config.language
+        )
+        message = notification_template(
+            notif_config, CONF_NOTIF_LOW_STOCK_MESSAGE, self._hass.config.language
+        )
         await self._send(
             notif_config,
             title,
@@ -545,7 +558,7 @@ class MedicationNotifier:
         is_ios = _is_ios(self._hass, target)
         data: dict[str, Any] = {}
         if actionable and med_id and target != DEFAULT_NOTIFY_TARGET:
-            data.update(_build_action_data(is_ios, med_id))
+            data.update(_build_action_data(is_ios, med_id, self._hass.config.language))
         if sound_keys and target != DEFAULT_NOTIFY_TARGET:
             _apply_sound(data, notif_config, sound_keys, is_ios)
         if data:

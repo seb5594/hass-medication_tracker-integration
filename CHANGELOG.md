@@ -3,6 +3,14 @@
 Versions follow the scheme of the original project: `YYYY.M.D.B`, the release date plus a build
 number for the day.
 
+## Unreleased
+
+- Notification titles, messages, and the mobile **Mark taken** action now follow
+  the Home Assistant system language, with German translations for due, overdue,
+  due-soon, taken, and low-stock alerts and English as the fallback.
+- Previously saved default message templates are localized automatically; custom
+  templates are preserved, and the options flow shows the localized defaults.
+
 ## 2026.10.20.0
 
 - German translation of the setup and options dialogs. The integration is called
