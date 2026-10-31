@@ -3,7 +3,7 @@
 Versions follow the scheme of the original project: `YYYY.M.D.B`, the release date plus a build
 number for the day.
 
-## Unreleased
+## 2026.10.31.0
 
 - Notification titles, messages, and the mobile **Mark taken** action now follow
   the Home Assistant system language, with German translations for due, overdue,
