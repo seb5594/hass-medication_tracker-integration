@@ -57,29 +57,21 @@ from .const import (
     DEFAULT_AS_NEEDED_MAX_PER_24H,
     DEFAULT_AS_NEEDED_MAX_PER_DAY,
     DEFAULT_AS_NEEDED_MIN_HOURS,
-    DEFAULT_DUE_MESSAGE,
-    DEFAULT_DUE_SOON_MESSAGE,
-    DEFAULT_DUE_SOON_TITLE,
-    DEFAULT_DUE_TITLE,
     DEFAULT_IOS_SOUND_MODE,
     DEFAULT_IOS_SOUND_NAME,
-    DEFAULT_LOW_STOCK_MESSAGE,
-    DEFAULT_LOW_STOCK_TITLE,
     DEFAULT_NOTIFY_TARGET,
     DEFAULT_OVERDUE_MAX_REPEATS,
-    DEFAULT_OVERDUE_MESSAGE,
     DEFAULT_OVERDUE_REPEAT_MINUTES,
-    DEFAULT_OVERDUE_TITLE,
     DEFAULT_STOCK_LOW_THRESHOLD,
     DEFAULT_STOCK_PER_DOSE,
-    DEFAULT_TAKEN_MESSAGE,
-    DEFAULT_TAKEN_TITLE,
     DOMAIN,
     IOS_SOUND_MODE_OPTIONS,
     MED_TYPE_AS_NEEDED,
     MED_TYPE_SCHEDULED,
     NOTIF_SOUND_KEYS_BY_TYPE,
 )
+
+from .notification_text import notification_template
 
 _TIME_PATTERN = re.compile(r"^\d{2}:\d{2}$")
 
@@ -752,10 +744,12 @@ class MedicationOptionsFlow(OptionsFlow):
             updated = {
                 **cfg,
                 CONF_NOTIF_DUE_TITLE: user_input.get(
-                    CONF_NOTIF_DUE_TITLE, DEFAULT_DUE_TITLE
+                    CONF_NOTIF_DUE_TITLE,
+                    notification_template(cfg, CONF_NOTIF_DUE_TITLE, self.hass.config.language),
                 ),
                 CONF_NOTIF_DUE_MESSAGE: user_input.get(
-                    CONF_NOTIF_DUE_MESSAGE, DEFAULT_DUE_MESSAGE
+                    CONF_NOTIF_DUE_MESSAGE,
+                    notification_template(cfg, CONF_NOTIF_DUE_MESSAGE, self.hass.config.language),
                 ),
                 **_sound_config_from_input("due", user_input),
             }
@@ -768,11 +762,15 @@ class MedicationOptionsFlow(OptionsFlow):
                 {
                     vol.Optional(
                         CONF_NOTIF_DUE_TITLE,
-                        default=cfg.get(CONF_NOTIF_DUE_TITLE, DEFAULT_DUE_TITLE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_DUE_TITLE, self.hass.config.language
+                        ),
                     ): str,
                     vol.Optional(
                         CONF_NOTIF_DUE_MESSAGE,
-                        default=cfg.get(CONF_NOTIF_DUE_MESSAGE, DEFAULT_DUE_MESSAGE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_DUE_MESSAGE, self.hass.config.language
+                        ),
                     ): str,
                     **_sound_schema_fields("due", cfg),
                 }
@@ -793,10 +791,16 @@ class MedicationOptionsFlow(OptionsFlow):
             updated = {
                 **cfg,
                 CONF_NOTIF_OVERDUE_TITLE: user_input.get(
-                    CONF_NOTIF_OVERDUE_TITLE, DEFAULT_OVERDUE_TITLE
+                    CONF_NOTIF_OVERDUE_TITLE,
+                    notification_template(
+                        cfg, CONF_NOTIF_OVERDUE_TITLE, self.hass.config.language
+                    ),
                 ),
                 CONF_NOTIF_OVERDUE_MESSAGE: user_input.get(
-                    CONF_NOTIF_OVERDUE_MESSAGE, DEFAULT_OVERDUE_MESSAGE
+                    CONF_NOTIF_OVERDUE_MESSAGE,
+                    notification_template(
+                        cfg, CONF_NOTIF_OVERDUE_MESSAGE, self.hass.config.language
+                    ),
                 ),
                 **_sound_config_from_input("overdue", user_input),
             }
@@ -809,11 +813,15 @@ class MedicationOptionsFlow(OptionsFlow):
                 {
                     vol.Optional(
                         CONF_NOTIF_OVERDUE_TITLE,
-                        default=cfg.get(CONF_NOTIF_OVERDUE_TITLE, DEFAULT_OVERDUE_TITLE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_OVERDUE_TITLE, self.hass.config.language
+                        ),
                     ): str,
                     vol.Optional(
                         CONF_NOTIF_OVERDUE_MESSAGE,
-                        default=cfg.get(CONF_NOTIF_OVERDUE_MESSAGE, DEFAULT_OVERDUE_MESSAGE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_OVERDUE_MESSAGE, self.hass.config.language
+                        ),
                     ): str,
                     **_sound_schema_fields("overdue", cfg),
                 }
@@ -834,10 +842,16 @@ class MedicationOptionsFlow(OptionsFlow):
             updated = {
                 **cfg,
                 CONF_NOTIF_DUE_SOON_TITLE: user_input.get(
-                    CONF_NOTIF_DUE_SOON_TITLE, DEFAULT_DUE_SOON_TITLE
+                    CONF_NOTIF_DUE_SOON_TITLE,
+                    notification_template(
+                        cfg, CONF_NOTIF_DUE_SOON_TITLE, self.hass.config.language
+                    ),
                 ),
                 CONF_NOTIF_DUE_SOON_MESSAGE: user_input.get(
-                    CONF_NOTIF_DUE_SOON_MESSAGE, DEFAULT_DUE_SOON_MESSAGE
+                    CONF_NOTIF_DUE_SOON_MESSAGE,
+                    notification_template(
+                        cfg, CONF_NOTIF_DUE_SOON_MESSAGE, self.hass.config.language
+                    ),
                 ),
                 **_sound_config_from_input("due_soon", user_input),
             }
@@ -850,11 +864,15 @@ class MedicationOptionsFlow(OptionsFlow):
                 {
                     vol.Optional(
                         CONF_NOTIF_DUE_SOON_TITLE,
-                        default=cfg.get(CONF_NOTIF_DUE_SOON_TITLE, DEFAULT_DUE_SOON_TITLE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_DUE_SOON_TITLE, self.hass.config.language
+                        ),
                     ): str,
                     vol.Optional(
                         CONF_NOTIF_DUE_SOON_MESSAGE,
-                        default=cfg.get(CONF_NOTIF_DUE_SOON_MESSAGE, DEFAULT_DUE_SOON_MESSAGE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_DUE_SOON_MESSAGE, self.hass.config.language
+                        ),
                     ): str,
                     **_sound_schema_fields("due_soon", cfg),
                 }
@@ -875,10 +893,14 @@ class MedicationOptionsFlow(OptionsFlow):
             updated = {
                 **cfg,
                 CONF_NOTIF_TAKEN_TITLE: user_input.get(
-                    CONF_NOTIF_TAKEN_TITLE, DEFAULT_TAKEN_TITLE
+                    CONF_NOTIF_TAKEN_TITLE,
+                    notification_template(cfg, CONF_NOTIF_TAKEN_TITLE, self.hass.config.language),
                 ),
                 CONF_NOTIF_TAKEN_MESSAGE: user_input.get(
-                    CONF_NOTIF_TAKEN_MESSAGE, DEFAULT_TAKEN_MESSAGE
+                    CONF_NOTIF_TAKEN_MESSAGE,
+                    notification_template(
+                        cfg, CONF_NOTIF_TAKEN_MESSAGE, self.hass.config.language
+                    ),
                 ),
                 **_sound_config_from_input("taken", user_input),
             }
@@ -891,11 +913,15 @@ class MedicationOptionsFlow(OptionsFlow):
                 {
                     vol.Optional(
                         CONF_NOTIF_TAKEN_TITLE,
-                        default=cfg.get(CONF_NOTIF_TAKEN_TITLE, DEFAULT_TAKEN_TITLE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_TAKEN_TITLE, self.hass.config.language
+                        ),
                     ): str,
                     vol.Optional(
                         CONF_NOTIF_TAKEN_MESSAGE,
-                        default=cfg.get(CONF_NOTIF_TAKEN_MESSAGE, DEFAULT_TAKEN_MESSAGE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_TAKEN_MESSAGE, self.hass.config.language
+                        ),
                     ): str,
                     **_sound_schema_fields("taken", cfg),
                 }
@@ -916,10 +942,16 @@ class MedicationOptionsFlow(OptionsFlow):
             updated = {
                 **cfg,
                 CONF_NOTIF_LOW_STOCK_TITLE: user_input.get(
-                    CONF_NOTIF_LOW_STOCK_TITLE, DEFAULT_LOW_STOCK_TITLE
+                    CONF_NOTIF_LOW_STOCK_TITLE,
+                    notification_template(
+                        cfg, CONF_NOTIF_LOW_STOCK_TITLE, self.hass.config.language
+                    ),
                 ),
                 CONF_NOTIF_LOW_STOCK_MESSAGE: user_input.get(
-                    CONF_NOTIF_LOW_STOCK_MESSAGE, DEFAULT_LOW_STOCK_MESSAGE
+                    CONF_NOTIF_LOW_STOCK_MESSAGE,
+                    notification_template(
+                        cfg, CONF_NOTIF_LOW_STOCK_MESSAGE, self.hass.config.language
+                    ),
                 ),
                 **_sound_config_from_input("low_stock", user_input),
             }
@@ -932,11 +964,15 @@ class MedicationOptionsFlow(OptionsFlow):
                 {
                     vol.Optional(
                         CONF_NOTIF_LOW_STOCK_TITLE,
-                        default=cfg.get(CONF_NOTIF_LOW_STOCK_TITLE, DEFAULT_LOW_STOCK_TITLE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_LOW_STOCK_TITLE, self.hass.config.language
+                        ),
                     ): str,
                     vol.Optional(
                         CONF_NOTIF_LOW_STOCK_MESSAGE,
-                        default=cfg.get(CONF_NOTIF_LOW_STOCK_MESSAGE, DEFAULT_LOW_STOCK_MESSAGE),
+                        default=notification_template(
+                            cfg, CONF_NOTIF_LOW_STOCK_MESSAGE, self.hass.config.language
+                        ),
                     ): str,
                     **_sound_schema_fields("low_stock", cfg),
                 }
