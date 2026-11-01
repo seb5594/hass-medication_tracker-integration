@@ -8,6 +8,8 @@
 ---
 
 <p align="center">
+  <a href="https://paypal.me/seb5594"><img src="https://img.shields.io/static/v1?label=Support&amp;message=PayPal&amp;color=0070BA&amp;logo=paypal&amp;logoColor=white&amp;style=for-the-badge" alt="PayPal" height="40"></a>
+  <a href="https://buymeacoffee.com/seb5594"><img src="https://img.shields.io/static/v1?label=Support&amp;message=Buy%20Me%20a%20Coffee&amp;color=FFDD00&amp;logo=buy-me-a-coffee&amp;logoColor=black&amp;style=for-the-badge" alt="Buy Me a Coffee" height="40"></a><br>
   <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=seb5594&amp;repository=hass-medication_tracker-integration&amp;category=integration"><img src="https://img.shields.io/static/v1?label=HACS&amp;message=Add%20integration&amp;color=41BDF5&amp;logo=homeassistantcommunitystore&amp;logoColor=white&amp;style=for-the-badge" alt="HACS" height="28"></a>
   <img src="https://img.shields.io/static/v1?label=home%20assistant&amp;message=%E2%89%A5%202024.7.0&amp;color=1877A5&amp;style=for-the-badge" alt="home assistant" height="28">
   <a href="https://github.com/seb5594/hass-medication_tracker-integration/releases/tag/v2026.10.31.0"><img src="https://img.shields.io/static/v1?label=version&amp;message=2026.10.31.0&amp;color=1877A5&amp;style=for-the-badge" alt="version" height="28"></a><br>
@@ -15,9 +17,7 @@
   <a href="https://github.com/seb5594/hass-medication_tracker-integration/issues"><img src="https://img.shields.io/github/issues/seb5594/hass-medication_tracker-integration?label=issues&amp;style=flat" alt="issues" height="20"></a>
   <img src="https://img.shields.io/static/v1?label=tests&amp;message=5%20passed&amp;color=2F855A&amp;style=flat" alt="tests" height="20">
   <a href="https://github.com/seb5594/hass-medication_tracker-integration/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/seb5594/hass-medication_tracker-integration/ci.yml?branch=main&amp;label=checks&amp;style=flat" alt="checks" height="20"></a>
-  <a href="https://github.com/seb5594/hass-medication_tracker-integration#license"><img src="https://img.shields.io/github/license/seb5594/hass-medication_tracker-integration?label=license&amp;style=flat" alt="license" height="20"></a><br>
-  <a href="https://paypal.me/seb5594"><img src="https://img.shields.io/static/v1?label=Support&amp;message=PayPal&amp;color=0070BA&amp;logo=paypal&amp;logoColor=white&amp;style=for-the-badge" alt="PayPal" height="40"></a>
-  <a href="https://buymeacoffee.com/seb5594"><img src="https://img.shields.io/static/v1?label=Support&amp;message=Buy%20Me%20a%20Coffee&amp;color=FFDD00&amp;logo=buy-me-a-coffee&amp;logoColor=black&amp;style=for-the-badge" alt="Buy Me a Coffee" height="40"></a>
+  <a href="https://github.com/seb5594/hass-medication_tracker-integration#license"><img src="https://img.shields.io/github/license/seb5594/hass-medication_tracker-integration?label=license&amp;style=flat" alt="license" height="20"></a>
 </p>
 <!-- header:end -->
 
