@@ -43,9 +43,10 @@ Track medications, scheduled doses, streaks, and overdue alerts — entirely loc
 
 ## Installation
 
-### Via HACS (recommended)
+### Via HACS or the Marketplace (recommended)
 
-1. Open HACS → Integrations
+1. Open HACS → Integrations (Home Assistant 2026.10 and older) or **Settings → Marketplace**
+   (2026.11 and newer), or use the *HACS · Marketplace* badge above
 2. Search for **Medication Tracker** and install
 3. Restart Home Assistant
 
