@@ -43,12 +43,18 @@ Track medications, scheduled doses, streaks, and overdue alerts — entirely loc
 
 ## Installation
 
-### Via HACS or the Marketplace (recommended)
+### Via HACS as a custom repository
 
-1. Open HACS → Integrations (Home Assistant 2026.10 and older) or **Settings → Marketplace**
-   (2026.11 and newer), or use the *HACS · Marketplace* badge above
-2. Search for **Medication Tracker** and install
-3. Restart Home Assistant
+1. Use the *HACS · Marketplace* badge above, or open **HACS → ⋮ → Custom repositories** and add
+   `https://github.com/seb5594/hass-medication_tracker-integration` as an **Integration**.
+2. Open the entry from `seb5594/hass-medication_tracker-integration` and download it.
+3. Restart Home Assistant.
+
+The upstream project `calebgab/medication_tracker` is listed in the default catalog. Both
+repositories install to `custom_components/medication_tracker`, so manage only one of them in
+HACS. If switching from the upstream repository, back up Home Assistant and remove the old
+repository's download in HACS before installing this fork. Keep your existing Home Assistant
+configuration entry.
 
 ### Manual
 
