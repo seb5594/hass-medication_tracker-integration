@@ -1,0 +1,27 @@
+name: Marketplace validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [marketplace-readiness]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Validate HACS catalog requirements
+        uses: hacs/action@main
+        with:
+          category: integration
+          repository: ${{ github.repository }}
+          comment: 'false'
+      - name: Validate Home Assistant integration
+        if: ${{ !cancelled() }}
+        uses: home-assistant/actions/hassfest@master
